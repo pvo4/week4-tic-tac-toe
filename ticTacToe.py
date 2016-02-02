@@ -6,7 +6,12 @@ def printBoard(board):
     #                                                                       #
     # Hint: you can follow the same process that was done in the textbook.  #
     #########################################################################
-
+    print(board['top-L'] + '|' + board['top-M'] + '|' + board['top-R'])
+    print('-+-+-')
+    print(board['mid-L'] + '|' + board['mid-M'] + '|' + board['mid-R'])
+    print('-+-+-')
+    print(board['low-L'] + '|' + board['low-M'] + '|' + board['low-R'])
+    
 def checkWinner(board, player):    
     print('Checking if ' + player + ' is a winner...')
     
@@ -18,7 +23,14 @@ def checkWinner(board, player):
     # variable 'player' has won. The function should return False           #
     # if the player in the variable 'player' has not won.                   #
     #########################################################################
-    
+    return ((board['top-L'] == player and board['top-M'] == player and board['top-R'] == player) or # across the top
+    (board['mid-L'] == player and board['mid-M'] == player and board['mid-R'] == player) or         # across the middle
+    (board['low-L'] == player and board['mid-M'] == player and board['mid-R'] == player) or         # across the bottom
+    (board['top-L'] == player and board['mid-L'] == player and board['low-L'] == player) or         # down the left side
+    (board['top-M'] == player and board['mid-M'] == player and board['low-M'] == player) or         # down the middle
+    (board['top-R'] == player and board['mid-R'] == player and board['low-R'] == player) or         # down the right side
+    (board['top-L'] == player and board['mid-M'] == player and board['low-R'] == player) or         # diagonal
+    (board['top-R'] == player and board['mid-M'] == player and board['low-L'] == player))           # diagonal
     
 def startGame(startingPlayer, board):
     # TO DO #################################################################
@@ -28,21 +40,21 @@ def startGame(startingPlayer, board):
 
     turn = startingPlayer
     for i in range(9):
-        printBoard(board)
-        print('Turn for ' + turn + '. Move on which space?')
-        move = input()
+        printBoard(board)   #calling on function printBoard to print the tictactoe board
+        print('Turn for ' + turn + '. Move on which space?')    #asking player X or O to pick a space
+        move = input()      #ask player to input move
         board[move] = turn
-        if( checkWinner(board, 'X') ):
-            print('X wins!')
+        if( checkWinner(board, 'X') ):      #calls upon function checkWinner to see if player X is in winning position
+            print('X wins!')        #lets the players know that X wins and end program
             break
-        elif ( checkWinner(board, 'O') ):
-            print('O wins!')
+        elif ( checkWinner(board, 'O') ):       #if X doesnt win, checks to see if O is the winner 
+            print('O wins!')        #prints O is the winner and end program
             break
     
-        if turn == 'X':
+        if turn == 'X':     #player X goes first then player O          
             turn = 'O'
         else:
-            turn = 'X'
+            turn = 'X'      #if player O goes first then player X is second
         
-    printBoard(board)
+    printBoard(board)       
     
